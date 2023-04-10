@@ -9,7 +9,8 @@ import Navbar from "~/components/Navbar";
 
 const Home: NextPage = () => {
 
-  const { data: sessionData } = useSession()
+  const { data: sessionData } = useSession();
+
 
   return (
     <>
