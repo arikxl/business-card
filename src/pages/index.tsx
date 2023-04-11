@@ -12,8 +12,12 @@ const Home: NextPage = () => {
 
   const [inputs, setInputs] = useState({
     title: '',
-    website : ''
+    website: ''
   })
+
+  const publish = () => {
+      console.log('a')
+  }
 
   return (
     <>
@@ -40,7 +44,7 @@ const Home: NextPage = () => {
           <h2 className='mb-6 text-left text-3xl font-semibold text-white'>
             Tell us about yourself
           </h2>
-          <div className='mb-12 grid grid-cols-2 gap-8'>
+          <div className='mb-10 grid grid-cols-2 gap-8'>
             <div>
               <label htmlFor='email' className='block text-sm font-medium text-white'>
                 Title
@@ -64,7 +68,7 @@ const Home: NextPage = () => {
               <div className='mt-1'>
                 <input
                   value={inputs.website}
-                  onChange={(e) => setInputs((prev) => ({...prev, website: e.target.value}))}
+                  onChange={(e) => setInputs((prev) => ({ ...prev, website: e.target.value }))}
                   type='text'
                   name='website'
                   className='block w-full rounded-md border-gray-300 shadow-sm
@@ -79,9 +83,19 @@ const Home: NextPage = () => {
 
         {sessionData && (
           <div className='flex flex-col items-center justify-center'>
-            <BusCard inputs={ inputs} />
+            <BusCard inputs={inputs} />
           </div>
         )}
+
+        <div className='flex justify-center mt-10'>
+          <button type='button'
+            onClick={publish}
+            className='rounded-full bg-black/10 text-white px-10 py-3 font-semibold
+            no-underline transition hover:bg-black/20'
+          >
+            Publish
+          </button>
+        </div>
       </main>
     </>
   );
