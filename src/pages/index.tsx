@@ -1,16 +1,19 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { type NextPage } from "next";
-import Head from "next/head";
-import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
+import Head from "next/head";
+import { useState } from "react";
+import BusCard from "~/components/busCard/BusCard";
 
-import { api } from "~/utils/api";
-import Navbar from "~/components/Navbar";
 
 const Home: NextPage = () => {
 
   const { data: sessionData } = useSession();
 
+  const [inputs, setInputs] = useState({
+    title: '',
+    website : ''
+  })
 
   return (
     <>
@@ -26,15 +29,60 @@ const Home: NextPage = () => {
           !sessionData && (
             <button className='rounded-full bg-black/10 px-10 py-3 font-semibold
             no-underline transition hover:bg-black/20'
-            onClick={sessionData ? () => signOut() : () => signIn('google')}
+              onClick={sessionData ? () => signOut() : () => signIn('google')}
             >
               Sign in with Google
             </button>
           )
         }
 
+        <div className='mx-auto max-w-7xl'>
+          <h2 className='mb-6 text-left text-3xl font-semibold text-white'>
+            Tell us about yourself
+          </h2>
+          <div className='mb-12 grid grid-cols-2 gap-8'>
+            <div>
+              <label htmlFor='email' className='block text-sm font-medium text-white'>
+                Title
+              </label>
+              <div className='mt-1'>
+                <input
+                  value={inputs.title}
+                  onChange={(e) => setInputs((prev) => ({ ...prev, title: e.target.value }))}
+                  type='text'
+                  name='title'
+                  className='block w-full rounded-md border-gray-300 shadow-sm
+                   focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+                  placeholder='Web Developer'
+                />
+              </div>
+            </div>
+            <div>
+              <label htmlFor='email' className='block text-sm font-medium text-white'>
+                Website
+              </label>
+              <div className='mt-1'>
+                <input
+                  value={inputs.website}
+                  onChange={(e) => setInputs((prev) => ({...prev, website: e.target.value}))}
+                  type='text'
+                  name='website'
+                  className='block w-full rounded-md border-gray-300 shadow-sm
+                   focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+                  placeholder='yourSite.com'
+                />
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {sessionData && (
+          <div className='flex flex-col items-center justify-center'>
+            <BusCard inputs={ inputs} />
+          </div>
+        )}
       </main>
-      <Navbar />
     </>
   );
 };
